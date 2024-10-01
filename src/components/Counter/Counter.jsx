@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
 import IconButton from "../UI/IconButton.jsx";
 import MinusIcon from "../UI/Icons/MinusIcon.jsx";
@@ -34,14 +34,21 @@ const Counter = ({ initialCount }) => {
     },
   ]);
 
-  const initialCountIsPrime = useMemo(
-    () => isPrime(initialCount),
-    [initialCount]
-  );
+  useEffect(() => {
+    setCounterChanges((prevCounter) => [
+      { value: initialCount, id: Math.random() * 100 },
+      ...prevCounter,
+    ]);
+  }, [initialCount]);
 
   const currentCounter = counterChanges.reduce(
     (prevCounter, counterChange) => prevCounter + counterChange.value,
     0
+  );
+
+  const initialCountIsPrime = useMemo(
+    () => isPrime(currentCounter),
+    [initialCount, currentCounter]
   );
 
   const handleDecrement = useCallback(() => {
@@ -69,7 +76,7 @@ const Counter = ({ initialCount }) => {
   return (
     <section className="counter">
       <p className="counter-info">
-        The initial counter value was <strong>{initialCount}</strong>. It{" "}
+        The initial counter value was <strong>{currentCounter}</strong>. It{" "}
         <strong>is {initialCountIsPrime ? "a" : "not a"}</strong> prime number.
       </p>
       <p>
