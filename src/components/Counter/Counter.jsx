@@ -34,12 +34,12 @@ const Counter = ({ initialCount }) => {
     },
   ]);
 
-  useEffect(() => {
-    setCounterChanges((prevCounter) => [
-      { value: initialCount, id: Math.random() * 100 },
-      ...prevCounter,
-    ]);
-  }, [initialCount]);
+  // useEffect(() => {
+  //   setCounterChanges((prevCounter) => [
+  //     { value: initialCount, id: Math.random() * 100 },
+  //     ...prevCounter,
+  //   ]);
+  // }, [initialCount]);
 
   const currentCounter = counterChanges.reduce(
     (prevCounter, counterChange) => prevCounter + counterChange.value,
