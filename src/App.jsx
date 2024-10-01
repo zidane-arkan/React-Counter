@@ -11,7 +11,9 @@ function App() {
   const [chosenCount, setChosenCount] = useState(0);
 
   function handleSetCounter(enteredNumber) {
+    // State Batching = Multiple state updated that called together in the same function will merge into 1 batch (One component execution)
     setChosenCount(enteredNumber);
+    setChosenCount((prevNumber) => prevNumber + 1);
   }
 
   return (
