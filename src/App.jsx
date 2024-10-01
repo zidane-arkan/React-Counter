@@ -25,6 +25,7 @@ function App() {
         </section> */}
         <SetCounter onSet={handleSetCounter} />
         <Counter initialCount={chosenCount} />
+        <Counter initialCount={chosenCount} />
       </main>
     </>
   );

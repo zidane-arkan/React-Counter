@@ -25,19 +25,27 @@ function isPrime(number) {
 
 const Counter = ({ initialCount }) => {
   log("<Counter /> rendered", 1);
+  // const [counter, setCounter] = useState(initialCount);
+  const [counterChanges, setCounterChanges] = useState([initialCount]);
+
   const initialCountIsPrime = useMemo(
     () => isPrime(initialCount),
     [initialCount]
   );
 
-  const [counter, setCounter] = useState(initialCount);
+  const currentCounter = counterChanges.reduce(
+    (prevCounter, counterChange) => prevCounter + counterChange,
+    0
+  );
 
   const handleDecrement = useCallback(() => {
-    setCounter((prevCounter) => prevCounter - 1);
+    // setCounter((prevCounter) => prevCounter - 1);
+    setCounterChanges((prevCounter) => [-1, ...prevCounter]);
   }, []);
 
   const handleIncrement = useCallback(() => {
-    setCounter((prevCounter) => prevCounter + 1);
+    // setCounter((prevCounter) => prevCounter + 1);
+    setCounterChanges((prevCounter) => [1, ...prevCounter]);
   }, []);
 
   return (
@@ -50,7 +58,7 @@ const Counter = ({ initialCount }) => {
         <IconButton icon={MinusIcon} onClick={handleDecrement}>
           Decrement
         </IconButton>
-        <CounterOutput value={counter} />
+        <CounterOutput value={currentCounter} />
         <IconButton icon={PlusIcon} onClick={handleIncrement}>
           Increment
         </IconButton>
